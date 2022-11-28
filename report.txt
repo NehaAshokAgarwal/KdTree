@@ -1,0 +1,199 @@
+1. Enter the number of hours it took you to complete the project between
+   the <<< and >>> signs below (eg, <<<10>>>).
+
+   <<< 20 >>>
+   
+2. Enter the difficulty level (1: very easy; 5: very difficult) of the project
+   between the <<< and >>> signs below (eg, <<<3>>>).
+
+   <<< 5 >>>
+
+3. Provide a short description of how you approached each problem, issues you 
+   encountered, and how you resolved those issues.
+
+   Problem 1 (Brute-force Implementation)
+      Approach: Instance variable - RedBlackBinarySearchTree<Point2D, Value> bst.
+      Constructor() - Constructed an empty symbol table.
+
+      size() - returned the size of bst by calling the size method defined in the
+      implementation of RedBlackBST which correctly returns the number
+      of key-value pair in the  ST.
+
+      put() method - I first checked that if the given point(key) is null or not.
+      If it is, then I throw a NPE with a message saying that p is null. Then, I
+      check if the value id null or not. If it is then I throw a NPE with a message
+      saying that the value is null. Otherwise, I add the given key-value pair into
+      the ST.
+
+      get() method - I first check if the given key(Point2D p) is null or not.
+      If it is then I throw a NPE, saying that the p is null. Otherwise,
+      I return the value associated with the given key in the ST by calling the get()
+      method implemented in the ResBlackBST.
+
+      contains() method  - I first check if p is null or not. If it is then I
+      throw a NPE with a message saying that the given p is null.
+      Otherwise, I call the contains() method on bst which is implemented in the RedBlackBST
+      which correctly results in True/False depending on whether the ST has the given key or not.
+
+      Point() - I created a LinkedQueue of comparable Point2D objects.As the RedBlackBST
+      implements the ordered API, I iterated through all the key-value pairs in the ST,
+      and enqueue the key with the given rank(i) in to the linkedQueue.
+      At the end, I return the queue of iterable Point2D objects.
+
+      nearest() method - I first check if the given query point p is null or not. If it yes,
+      then I throw a NPE saying that the p is null. Otherwise, I set a variable closes_distance
+      to infinity to keep track of the closest distance found so far. I also set j to 0 to keep
+      track of the position of the point in the ST. So, after that I iterated through
+      all the key-value pair in the ST and checked if the point at the given rank and
+      the given point are same or not. I also check if the distance between the two point
+      (by calling distanceSquared method() defined in the Point2D datatype) is
+      less than the closest_distance found so far. If it is then I keep updating the
+      value of the closest_distance and all keep changing the value of j to keep track
+      of the position of the point found so far in teh ST.
+
+      After exhausting teh for-loop, if the value of the closest_distance is
+      not infinity, then I return the point at the given rank(j) from the ST. Otherwise,
+      I return null.
+
+      k-nearest() method - I first check if p is null or not.
+      If it is, then I throw a NPE, saying that the given p is null.
+      Otherwise, I create a LinkedQueue and a MinPQ with a comparator(p.distanceToOrder())
+      So that when I do the delMin() from the MinPQ, it gives me the point with the smallest
+      distance to the given query point p.  I iterated through all the key-value pair in the ST,
+      and enqueued the keys()Pint2D objects in to the minPQ.
+      Then I again iterated through all the key-value pair in the ST and do a delMin() each
+      time in the minPQ to get the next the nearest point from the given query point.
+      I check if the point is different from the given point and if the number of elements
+      enqueue is less than or equal to k or not. If it is then I enqueue point in to the
+      linkedList and continue the process. However, we break out of the second-for
+      loop when k-number of points have been enqueued in to the linked list.
+
+      Issues and resolution: I had no issues with this problem.
+   Problem 2 (2dTree Implementation)
+      Approach: Instance variable - Node root(a Node pointer pointing to the root),
+      and int n(number of nodes in the KdTree)
+
+      Constructor() - constructed an empty KdTree by setting Node to null and n to 0.
+
+      size() method - Returned number of nodes (this.n) i.e. the instance variable to
+      the caller.
+
+      put() method - In the put method, we are adding points in the tree in such a way that first at the root points
+      are compared by their x-coordinate and then at the next level, the points are compared by their
+      y-coordinate and then by x coordinate and then y coordinate and so on. If in the comparison,
+      the coordinate of the point is greater than the point of the Node, then point will go to the right side
+      of the tree, otherwise it will go to the left side of the tree.
+      The tree is made up of the Nodes, which has a point p, value v, pointer to left Node and right Node,
+      and a rectangle.
+      Thus, in order to add a point in the tree, one has to pass along all these attributes with it
+      appropriately. The put method is implemented in two ways - public and private.
+      In the public method, I am creating a rectangle for the root Node which is from
+      [-inf, -inf]x[inf, inf]. Then I am calling private put method with appropriate arguments -
+      root for the topmost Node, given p, given value, rectangle, and true because the
+      comparison will be based on the x-coordinate.
+      In the private method, I simply return a new Node with the appropriate values -
+      p, value, rectangle. Otherwise, I check if the point
+      is already there in the ST or not. If it there, then I update the value of the given point.
+      Otherwise, I check if the value of lr is true or not. If the value of lr is true then I check
+      if the comparison is bigger or less. If the comparison turns out to be bigger, then that means the
+      rectangle is on the right side of the splitting line, and it is y-aligned. So I
+      create a rectangle passing the appropriate values to it. Otherwise, the rectangle
+      is on the left side of the splitting line and y-aligned.
+      However, if the value of lr is false then comparison would be based on the y-coordinate and
+      thus if the comparison is greater than the rectangle is in on the up and if the
+      comparison is lesser than the rectangle would be at bottom. Thus, I create a rectangle for the
+      different situation. Also, calling  recursively put method according to the four situations
+      described above in order to find an appropriate place for the new Key-value pair
+      in the tree.
+
+      get() Method - The get method is also implemented in 2 ways - public and private.
+      The public method check if the given p is null or not. If not then it calls the private get method.
+      In the private method, I am calling the put method recursively in order to search the given key.
+      Since there are four situations( Node is x aligned or y-aligned or if the given point x/y
+      coordinate is greater of less the node's point), thus there are four conditions in my method.
+      Based on which one is true, I am calling the get method recursively on that node.
+
+      Points() method - In the points() method, I am creating two linkedList - traversal and collection.
+      One is for to aid in traversal and other is to aid in the collection of the points.
+      I enqueue the root Node in teo the traversal Queue. Then, I do a for-loop, to iterate through all the
+      nodes in the tree and in the for loop enqueue the point of the root/current root.  Then,
+      i enqueue its children if they are not null in to the traversal list. Then I do a delMin, since
+      the Queue implements FIFO, I will be get the node in tje required order. This process,
+      continues for all the nodes and in the end I will have a Queue collection which stores all
+      the points in the required order.
+
+      size() - I simply return the number of nodes(this.n) in the kdTree.
+
+      Contains() method - I first check if the given key is null or not. If not then I call the get
+      method with the given point and check if it returns a value or null.
+      If it returns a value, then I return True else I return false.
+
+       range() method - In the range method, I Collect all the point in the ST that are in the given rectangle.
+       Again this method is implemented in 2 ways - public and private.
+        The public method checks if the given rect is null or not. If not then it calls
+       the private method. In the private method I check first if the node's point is in the
+       given rect or not. If it is, then I enqueue it into the linkedList created.
+       Then I recursively call the range method to explore the node if that node's rectangle
+       intersects with the given rectangle.  As the pruning rule says if the given rectangle intersects
+       the node.rectangle, then explore it and enqueue its points otherwise don't.
+
+       nearest method - The nearest method is again implemented int wo ways - private and public.
+       In the public method, I check if the given query point is null or not. If it is, then I return
+       a NPE otherwise I call the private the nearest method by passing the appropriate arguments-
+       given p, a null point and true.
+       In the private the nearest method, If x is null, then I return nearest. Otherwise, I set a
+       local variable bestDistance to keep track of the best distance found so far and set it to
+       infinity.  If the nearest point is not null, then I keep updating the best distance found so
+       far as the nearest is my point which keep track of the best point so far.
+       Then I check if the given point and the query point is same or not.
+       If they are different and the distance between the query point and the node. Point is less than the
+       best distance found so far then I explore that node by calling the nearest method recursively
+       on it two children. However, I call it in such a way that the call is always made on that Node
+       whose point lies on the same side on the splitting line as the query point. Further the other call
+       recurse back to other side of the subtree in order to find a better the nearest point.
+
+       k-nearest method - This method call is again of two types - private and public. In the private method,
+       I check if the given query point and k is null or not. If not then I call the private the nearest method
+       by passing appropriate arguments - root as a Node, given p, given k, maxPQ built with
+       p.distanceToOrder() comparator,and true as initially the comparison is based on the x-coordinate.
+       In the private method, I check if the Node is null or size of maxPQ is greater than k or not.
+       If either of teh condition is true then I return. Then, I check if the two node's point and the
+       given point are same or not. If they are not, then I insert it into the maxPQ.  If the size of the
+       maxPQ is greater than that of k, then I do a deMax as we want only k-nearest neighbour of
+       the given query point.
+       Then I do the pruning rule which says that if the distance between the node's rectangle and
+       the given query point is less than the distance between the given query point and the best
+       point so far. Then explore that node, otherwise don't. Thus, If the condition id true I recursively
+       call the nearest method in such a way that the Node whose point lies on the same side of the
+       splitting line is as the query point is called first. The second call to put method is recursively
+       called back on tp the other subtree because there might be chance to find the nearest
+       point.
+
+       Issues and resolution: The issues that I had, was that I was not creating a
+       rectangle object for every node in the put() method. I was just writing
+       root.rect/x.rect which was giving me a NPE. The issue was pointed out by prof.Swami.
+       After that, I implemented the put method correctly.
+
+       Another issue that I had was with the nearest method. I was so much confused about
+       how to recurse back in that method. Prof Swami helped me out in explaining the logic
+       and in implementing it correctly and efficiently.
+
+       Last issue that I had was with the point() method. I was so confused on how to
+       traverse the KdTree in a way that I enqueue first the root and then the children
+       and then the grandchildren. T.A. Richard, explained to me the algorithm so well that
+       I was able to execute in my code successfully.
+
+
+4. Did you receive help from anyone? List their names, status (classmate,
+   CS210 grad, TA, other), and the nature of help received.
+
+   Name               Status       Help Received
+   Swami Iyer       Professor    Problem 2(The Nearest method, Put method)
+
+   Richard Anarfi     T.A.        Problem 2(Points() method)
+
+5. List any other comments here. Feel free to provide any feedback on how
+   much you learned from doing the assignment, and whether you enjoyed
+   doing it.
+
+   Problem 2 was quite intense.
