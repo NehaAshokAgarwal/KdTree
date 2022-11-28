@@ -8,23 +8,20 @@ import stdlib.StdOut;
 public class KdTreePointST<Value> implements PointST<Value> {
     private Node root; // Reference pointer to the root of the 2dTree
     private int n; // Number of nodes in the tress
-
     
     public KdTreePointST() {
         root = null;
         n = 0;
     }
-   
+    
     public boolean isEmpty() {
         return this.n == 0;
     }
-
-    .
+    
     public int size() {
         return this.n;
     }
-
-
+    
     public void put(Point2D p, Value value) {
         if (p == null) {
             throw new NullPointerException("p is null");
@@ -77,6 +74,7 @@ public class KdTreePointST<Value> implements PointST<Value> {
         this.range(root, rect, q);
         return q;
     }
+    
     public Point2D nearest(Point2D p) {
         if (p == null) {
             throw new NullPointerException("p is null");
@@ -85,7 +83,7 @@ public class KdTreePointST<Value> implements PointST<Value> {
         Point2D z = null;
         return nearest(root, p, z, true);
     }
-
+    
     public Iterable<Point2D> nearest(Point2D p, int k) {
         if (p == null) {
             throw new NullPointerException("p is null");
@@ -100,8 +98,7 @@ public class KdTreePointST<Value> implements PointST<Value> {
     // x-coordinates; otherwise, the points are compared by their y-coordinates. If the
     // comparison of the coordinates (x or y) is true, the recursive call is made on x.lb;
     // otherwise, the call is made on x.rt.
-
- 
+    
     private Node put(Node x, Point2D p, Value value, RectHV rect, boolean lr) {
         if (x == null) {
             n++;
@@ -145,6 +142,7 @@ public class KdTreePointST<Value> implements PointST<Value> {
         }
         return null;
     }
+    
     private void range(Node x, RectHV rect, LinkedQueue<Point2D> q) {
         // If x is null, then return null.
         if (x == null) {
@@ -159,6 +157,7 @@ public class KdTreePointST<Value> implements PointST<Value> {
         }
 
     }
+    
     private Point2D nearest(Node x, Point2D p, Point2D nearest, boolean lr) {
         Point2D nearPoint = nearest;
         if (x == null) {
